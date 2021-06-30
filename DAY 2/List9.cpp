@@ -35,6 +35,7 @@ public:
 	void Skofromlist(Node<T>* head, int size);
 	int TestSkofromList();
 	static void runTest(int(*testFunction)(), const string& testName);
+	
 	int size;
 	Node<T>* head;
 };

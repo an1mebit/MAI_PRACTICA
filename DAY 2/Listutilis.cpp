@@ -32,9 +32,9 @@ public:
 	void clear();
 	int getsize() { return size; }
 	void show();
-	void Skofromlist(Node<T>* head, int size);
-	int TestSkofromList();
-	static void runTest(int(*testFunction)(), const string& testName);
+	double Skofromlist(Node<T>* head, int size);
+	double TestSkofromList();
+	static void runTest(int(List<T>::*testFunction)(), const string& testName);
 	
 	int size;
 	Node<T>* head;
@@ -94,7 +94,7 @@ void List<T>::show()
 }
 
 template<typename T>
-void List<T>::Skofromlist(Node<T>* head, int size)
+double List<T>::Skofromlist(Node<T>* head, int size)
 {
 	setlocale(LC_ALL, "rus");
 	if (!head) return 0;
@@ -114,11 +114,11 @@ void List<T>::Skofromlist(Node<T>* head, int size)
 		sum = sum / count->data;
 		current = current->next;
 	}
-	cout << sqrt(sum) << endl;
+	return sqrt(sum);
 }
 
 template<typename T>
-int List<T>::TestSkofromList()
+double List<T>::TestSkofromList()
 {
 	Node<T>* head = new Node;
 	pushnode(head, new Node{ 1 });
@@ -133,13 +133,12 @@ int List<T>::TestSkofromList()
 		&& head->next->next->data == 2 && head->next->next->next->data == 3);
 
 	return ((f1 && f2 && f3) ? 0 : -1);
-	return 0;
 }
 
 template<typename T>
-void List<T>::runTest(int(*TestSkofromList)(), const string& testName)
+void List<T>::runTest(double(List<T>::*TestSkofromList)(), const string& testName)
 {
-	if (TestSkofromList() == 0)
+	if (List<T>::TestSkofromList() == 0)
 		std::cout << "Test " << testName << " - OK" << std::endl;
 	else
 		std::cout << "Test " << testName << " - FAIL" << std::endl;
@@ -147,6 +146,6 @@ void List<T>::runTest(int(*TestSkofromList)(), const string& testName)
 
 int main()
 {
-	List<int> list;
-	list.runTest(list.TestSkofromList(), "testSkoFromList");
+	List<double> list;
+	list.runTest(bind(list.TestSkofromList()), "testSkoFromList");
 }
